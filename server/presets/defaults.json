@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "presets": [
+    {
+      "name": "Melodic Arpeggios",
+      "text": "Favor arpeggiated figures across octaves. Keep motion mostly stepwise with occasional chord skips."
+    },
+    {
+      "name": "Supportive Chords",
+      "text": "Prefer triads and sevenths. Use close voicings under the melody, avoid cluttering lead lines."
+    },
+    {
+      "name": "Bluesy Flavor",
+      "text": "Allow blues scale tones (#4/b5), swung feel, occasional blue notes."
+    },
+    {
+      "name": "Sparse & Cinematic",
+      "text": "Very sparse patterns, long durations, low velocity, leave space."
+    },
+    {
+      "name": "Funky Syncopation",
+      "text": "Light syncopation; short stabs and off-beat accents."
+    }
+  ],
+  "boosters": [
+    {
+      "key": "human_timing",
+      "label": "Human-like Timing",
+      "text": "Introduce slight timing and duration variance to feel human, not mechanical."
+    },
+    {
+      "key": "dynamic_swells",
+      "label": "Dynamic Swells",
+      "text": "Occasionally build or fade intensity over the bar (crescendo/decrescendo)."
+    },
+    {
+      "key": "call_response",
+      "label": "Call & Response",
+      "text": "Leave brief space after the user phrase, then reply with a short answering phrase."
+    },
+    {
+      "key": "avoid_clashes",
+      "label": "Avoid Clashes",
+      "text": "Do not double the user's exact pitches; prefer complementary harmony or rhythm."
+    }
+  ]
+}

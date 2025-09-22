@@ -1,0 +1,132 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Phaelus Jam — by LogicMUSE</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="topbar">Phaelus Jam  <span class="byline">by LogicMUSE</span>
+    <div id="aiToggleWrap" class="aitoggle"><label class="switch"><input type="checkbox" id="aiToggle" checked><span class="slider"></span></label><span class="switchlabel">AI</span></div>
+    <div id="ledStrip" class="ledstrip">
+      <div class="ledbox" title="WebSocket"><span class="led" id="led-ws"></span><span class="ledlabel">WS</span></div>
+      <div class="ledbox" title="MIDI Input"><span class="led" id="led-midi-in"></span><span class="ledlabel">IN</span></div>
+      <div class="ledbox" title="MIDI Output"><span class="led" id="led-midi-out"></span><span class="ledlabel">OUT</span></div>
+      <div class="ledbox" title="Engine"><span class="led" id="led-engine"></span><span class="ledlabel">ENG</span></div>
+      <div class="ledbox" title="LLM Connected"><span class="led" id="led-llm"></span><span class="ledlabel">LLM</span></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div id="tabbar">
+      <button data-panel="panel-front" class="tab active">Front</button>
+      <button data-panel="panel-config" class="tab">Configuration</button>
+      <button data-panel="panel-monitor" class="tab">Monitoring</button>
+      <button data-panel="panel-logging" class="tab">Advanced Logging</button>
+      <button data-panel="panel-testing" class="tab">Testing</button>
+    </div>
+
+    <div id="panels">
+      <div id="panel-front" class="panel active">
+        <section id="ports">
+          <h2>Ports</h2>
+          <div>
+            <label>Input:</label> <select id="inSel"></select>
+            <label>Output:</label> <select id="outSel"></select>
+            <button id="startBtn">Start</button>
+          </div>
+        </section>
+
+        <section id="params">
+          <h2>Parameters</h2>
+          <div class="row"><label><input type="checkbox" id="roleSwap" checked /> Role Swap (chords→arp, note→chord)</label></div>
+          <div class="row"><label>Density (1..5):</label> <input type="number" id="density" min="1" max="5" value="3" /> <button id="applyParams">Apply</button></div>
+          <div class="row"><label>Model:</label> <input type="text" id="model" placeholder="gpt-4o-mini" /></div>
+          <button id="suggestNow">Suggest Now</button>
+        </section>
+
+        <section id="prompts">
+          <h2>Prompting</h2>
+          <div class="row"><label>Prompt Preset:</label> <select id="presetSel"></select></div>
+          <div class="row"><label>Preset Text:</label><br/><textarea id="presetText" rows="4" style="width:100%"></textarea></div>
+          <div class="row"><label>Your Add-on:</label><br/><textarea id="appendText" rows="3" style="width:100%"></textarea></div>
+          <div class="row"><label>Final Prompt Preview:</label><pre id="promptPreview" class="prebox"></pre><button id="applyPrompt">Apply Prompt</button></div>
+        </section>
+      </div>
+
+      <div id="panel-config" class="panel">
+        <section id="presetFiles">
+          <h2>Preset Files</h2>
+          <div id="fileBox" class="row"></div>
+          <div class="row"><input type="file" id="uploadInput" accept=".json" /> <button id="uploadBtn">Upload Preset</button></div>
+          <div class="row">
+            <button id="loadSelected">Load Selected Files</button>
+            <button id="reloadChanged" disabled>Reload Changed</button>
+            <button id="reloadFiles">Reload List</button>
+            <input type="text" id="exportName" placeholder="export name (optional)" />
+            <button id="exportSelected">Export Selection</button>
+          </div>
+        </section>
+      </div>
+
+      <div id="panel-monitor" class="panel">
+        <section id="statStrip">
+          <h2>Statistics (Compact)</h2>
+          <div class="grid3">
+            <div class="meter"><div class="label">LLM Requests</div><div class="value" id="m-llm-req">0</div></div>
+            <div class="meter"><div class="label">Tokens In</div><div class="value" id="m-tok-in">0</div></div>
+            <div class="meter"><div class="label">Tokens Out</div><div class="value" id="m-tok-out">0</div></div>
+          </div>
+          <div class="grid3" style="margin-top:12px;">
+            <div class="meter"><div class="label">MIDI In</div><div class="value" id="m-midi-in">0</div></div>
+            <div class="meter"><div class="label">MIDI Out</div><div class="value" id="m-midi-out">0</div></div>
+            <div class="meter"><div class="label">Composer Late %</div><div class="value" id="m-late">0%</div></div>
+          </div>
+        </section>
+
+        <section id="status">
+          <h2>Status</h2>
+          <div class="grid3">
+            <div class="meter"><div class="label">BPM</div><div class="value" id="bpm">—</div></div>
+            <div class="meter"><div class="label">Intensity</div><div class="value" id="intensity">—</div></div>
+            <div class="meter"><div class="label">Played (last)</div><div class="value" id="played">0</div></div>
+          </div>
+          <div class="row"><b>Held:</b> <span id="held">[]</span></div>
+          <div class="row"><b>Recent:</b> <span id="recent">[]</span></div>
+        </section>
+      </div>
+
+      <div id="panel-logging" class="panel">
+        <section>
+          <h2>Advanced Logging</h2>
+          <div class="row">
+            <label><input type="checkbox" id="logWs" checked /> Log WebSocket</label>
+            <label style="margin-left:16px;"><input type="checkbox" id="logHttp" /> Log HTTP</label>
+          </div>
+          <div class="row"><button id="clearLog">Clear</button> <button id="downloadLog">Download Log</button></div>
+          <pre id="logBox" class="logbox"></pre>
+        </section>
+      </div>
+
+      <div id="panel-testing" class="panel">
+        <section>
+          <h2>Testing</h2>
+          <div class="row">
+            <button id="btnPing">Ping State</button>
+            <button id="btnSuggest">Force Suggest</button>
+            <button id="btnFetchPorts">Fetch Ports</button>
+            <button id="btnApplyParamsQuick">Apply Quick Params</button>
+            <button id="btnFetchMetrics">Fetch Metrics</button>
+            <button id="btnResetMetrics">Reset Metrics</button>
+          </div>
+          <pre id="testResult" class="prebox"></pre>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

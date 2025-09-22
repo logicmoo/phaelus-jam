@@ -1,0 +1,17 @@
+
+model: gpt-4o-mini
+temperature: 0.4
+repo_root: ".."
+code_paths:
+  - "phaelusjam/"
+  - "scripts/"
+  - "tests/"
+write_policy:
+  allow_edits: true
+  protected:
+    - "pyproject.toml"
+    - "README.md"
+goals:
+  - "Keep interfaces stable; prefer additive changes."
+  - "Write clean, typed Python and docstrings."
+  - "Add tests for complex logic."

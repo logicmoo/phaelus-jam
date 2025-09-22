@@ -1,0 +1,50 @@
+
+:root{
+  --bg-outer:#1a1a1c; --bg-inner:#222327; --panel:#26272b; --panel-dark:#1f2023;
+  --border:#2f3136; --border-strong:#3a3d44; --text:#e8eaed; --muted:#aab2bd;
+  --accent:#3aa0ff; --accent-strong:#2d8ae0; --danger:#ef4444; --ok:#10b981; --warn:#f59e0b;
+}
+body { font-family: system-ui,-apple-system,Segoe UI,Roboto,sans-serif; margin: 0; background: var(--bg-outer); color: var(--text); }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
+.topbar{ background: linear-gradient(180deg, #1f2126 0%, #1a1b1f 100%); border-bottom:1px solid var(--border-strong); padding:10px 16px; font-weight:700; letter-spacing:.3px; position:sticky; top:0; z-index:10;}
+.topbar .byline{ color: var(--muted); font-weight:500; margin-left:8px; }
+#tabbar { display:flex; gap:8px; padding:12px 0; position:sticky; top:44px; background: var(--bg-outer); z-index:9; border-bottom:1px solid var(--border); }
+.tab{ background: var(--panel-dark); border:1px solid var(--border-strong); color: var(--text); padding:8px 12px; border-radius:8px 8px 0 0; cursor:pointer; }
+.tab.active{ background: var(--panel); border-bottom-color: var(--panel); box-shadow: inset 0 -2px 0 var(--accent); }
+.panel{ display:none; padding:16px 0; }
+.panel.active{ display:block; }
+section{ background: var(--panel); padding: 14px; border:1px solid var(--border); border-radius: 10px; margin: 16px 0; }
+select, input[type=number], input[type=text], textarea{ padding: 6px 8px; border-radius: 8px; border: 1px solid var(--border-strong); background: var(--panel-dark); color: var(--text); }
+select:focus, input:focus, textarea:focus{ border-color: var(--accent); box-shadow: 0 0 0 2px rgba(58,160,255,.15); outline:none; }
+button{ background: var(--accent); color: var(--text); border:1px solid var(--border); padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+button:hover{ background: var(--accent-strong); }
+.grid3{ display:grid; grid-template-columns: repeat(3,1fr); gap:12px; }
+.meter{ background: var(--panel-dark); border:1px solid var(--border-strong); border-radius:12px; padding:12px; text-align:center; }
+.meter .label{ font-size:12px; color: var(--muted); }
+.meter .value{ font-size:22px; font-weight:700; margin-top:6px; }
+.prebox{ white-space:pre-wrap; background: var(--panel-dark); border:1px solid var(--border-strong); padding:8px; border-radius:8px; max-height:180px; overflow:auto; }
+.logbox{ white-space:pre-wrap; background:#14161a; border:1px solid var(--border-strong); padding:8px; border-radius:8px; height:260px; overflow:auto; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12px; }
+/* LED strip */
+.ledstrip{ display:flex; gap:10px; align-items:center; float:right; }
+.ledbox{ display:flex; align-items:center; gap:6px; background: var(--panel-dark); border:1px solid var(--border); padding:4px 8px; border-radius:999px; }
+.led{ width:10px; height:10px; border-radius:50%; display:inline-block; box-shadow: inset 0 0 4px rgba(0,0,0,.6); background:#3a3d44; }
+.led.on.ok{ background:#19d18f; box-shadow: 0 0 6px rgba(25,209,143,.7); }
+.led.on.warn{ background:#f59e0b; box-shadow: 0 0 6px rgba(245,158,11,.7); }
+.led.on.err{ background:#ef4444; box-shadow: 0 0 6px rgba(239,68,68,.7); }
+.led.on.info{ background:#3aa0ff; box-shadow: 0 0 6px rgba(58,160,255,.7); }
+.ledlabel{ font-size:11px; color: var(--muted); }
+.topbar::after{ content:""; display:block; clear:both; }
+/* Switch */
+.aitoggle{ display:inline-flex; align-items:center; gap:6px; margin-right:12px; float:right; }
+.switch { position: relative; display: inline-block; width: 42px; height: 22px; }
+.switch input { opacity:0; width:0; height:0; }
+.slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#555; transition:.2s; border-radius:999px; border:1px solid var(--border); }
+.slider:before { position:absolute; content:""; height:18px; width:18px; left:2px; bottom:2px; background:#fff; transition:.2s; border-radius:50%; }
+input:checked + .slider { background: var(--accent); }
+input:checked + .slider:before { transform: translateX(20px); }
+.switchlabel{ color: var(--muted); font-size: 12px; }
+.status { margin-left: 8px; font-size: 12px; opacity: .85; }
+.status[data-status="loaded"] { color: var(--ok); }
+.status[data-status="unloaded"] { color: #9ca3af; }
+.status[data-status="modified"] { color: var(--warn); }
+.status[data-status="error"] { color: var(--danger); }
